@@ -9,10 +9,9 @@ Future<void> main() async {
 
   await Env.load();
 
-  await Supabase.initialize(
-    url: Env.supabaseUrl,
-    anonKey: Env.supabaseAnonKey,
-  );
+  if (Env.isConfigured) {
+    await Supabase.initialize(url: Env.supabaseUrl, anonKey: Env.supabaseAnonKey);
+  }
 
-  runApp(const CallSenseApp());
+  runApp(CallSenseApp(supabaseConfigured: Env.isConfigured));
 }

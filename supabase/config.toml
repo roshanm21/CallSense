@@ -1,0 +1,2 @@
+[functions.verify-company]
+verify_jwt = true
