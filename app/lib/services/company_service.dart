@@ -14,6 +14,10 @@ class CompanyService {
       throw ArgumentError.value(companyName, 'companyName', 'Enter a company name.');
     }
 
+    if (_client.auth.currentSession == null) {
+      await _client.auth.signInAnonymously();
+    }
+
     final response = await _client.functions.invoke(
       'verify-company',
       body: {'companyName': name},
