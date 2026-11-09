@@ -11,6 +11,7 @@ class FamilyScreen extends StatefulWidget {
 
 class _FamilyScreenState extends State<FamilyScreen> {
   final _codeController = TextEditingController();
+  final _alertController = TextEditingController();
   late final _service = FamilyService();
   String? _createdCode;
   String? _message;
@@ -50,6 +51,7 @@ class _FamilyScreenState extends State<FamilyScreen> {
   @override
   void dispose() {
     _codeController.dispose();
+    _alertController.dispose();
     super.dispose();
   }
 
@@ -91,6 +93,33 @@ class _FamilyScreenState extends State<FamilyScreen> {
                         'Family account linked.',
                       ),
               child: const Text('Link with code'),
+            ),
+            const Divider(height: 32),
+            Text(
+              'Send an alert to your guardian',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _alertController,
+              maxLength: 1000,
+              minLines: 2,
+              maxLines: 4,
+              decoration: const InputDecoration(
+                labelText: 'Alert message',
+                hintText: 'For example: Someone asked me for a verification code.',
+              ),
+            ),
+            const SizedBox(height: 8),
+            FilledButton.icon(
+              onPressed: _busy
+                  ? null
+                  : () => _run(
+                        () => _service.sendAlert(_alertController.text),
+                        'Alert sent to your linked guardian.',
+                      ),
+              icon: const Icon(Icons.notifications_active_outlined),
+              label: const Text('Send family alert'),
             ),
             if (_message != null) ...[
               const SizedBox(height: 12),

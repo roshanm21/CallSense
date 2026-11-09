@@ -20,22 +20,26 @@ company information, and sharing family alerts.
    flutter pub get
    ```
 
-3. Copy `app/env.example.json` to `app/env.json`, fill in your Supabase project
-   URL and anon key, then run from the `app/` directory:
+3. Copy `app/env.example.json` to `app/env.json`. Set `SUPABASE_URL` and
+   `SUPABASE_PUBLISHABLE_KEY` in that local file, then run from the `app/`
+   directory:
 
    ```sh
    flutter run --dart-define-from-file=env.json
    ```
 
-   The anon key is intended for client apps; never put a Supabase service-role
-   key in the Flutter app. If Supabase is not configured, local message scans
-   still work.
+   The publishable key is intended for client apps. Never put a Supabase
+   secret/service-role key in the Flutter app or commit it. The Supabase SDK
+   uses the project's JWKS endpoint automatically for JWT verification; it
+   does not need to be configured in Flutter. If Supabase is not configured,
+   local message scans still work.
 
 ## Supabase setup
 
 1. Apply `supabase/migrations/001_initial_schema.sql`.
 2. Enable anonymous sign-ins in Supabase Auth for family linking.
-3. Set the Edge Function secret and deploy the function:
+3. Set the Tavily API key as an Edge Function secret and deploy the function
+   (do this in your own terminal; do not put the Supabase secret key in the app):
 
    ```sh
    supabase secrets set TAVILY_API_KEY=your_tavily_key

@@ -11,7 +11,7 @@ const redFlags = <RedFlag>[
   RedFlag('otp', 25, 'Mentions an OTP or verification code.'),
   RedFlag('share your pin', 35, 'Asks you to disclose a private PIN.'),
   RedFlag('account will be blocked', 25, 'Uses an urgent account-blocking threat.'),
-  RedFlag('urgent action required', 20, 'Pressures you to act immediately.'),
+  RedFlag('urgent action required', 25, 'Pressures you to act immediately.'),
   RedFlag('claim your prize', 20, 'Promises a prize that may be used to lure you in.'),
   RedFlag('you have won', 15, 'Claims you have won something unexpectedly.'),
   RedFlag('send money', 25, 'Asks for a money transfer.'),
