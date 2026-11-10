@@ -20,48 +20,39 @@ class ShareService {
 
   Future<void> start() async {
     _subscriptions.add(
-      ReceiveSharingIntent.instance.getTextStream().listen(
-        (text) {
-          if (text.trim().isNotEmpty) {
-            _controller.add(
-              SharedContent(value: text, type: SharedContentType.text),
-            );
-          }
-        },
-        onError: _controller.addError,
-      ),
-    );
-    _subscriptions.add(
       ReceiveSharingIntent.instance.getMediaStream().listen(
         (files) {
           for (final file in files) {
-            if (file.type == SharedMediaType.image) {
-              _controller.add(
-                SharedContent(
-                  value: file.path,
-                  type: SharedContentType.image,
-                ),
-              );
-            }
+            _addMedia(file);
           }
         },
         onError: _controller.addError,
       ),
     );
 
-    final initialText = await ReceiveSharingIntent.instance.getInitialText();
-    if (initialText != null && initialText.trim().isNotEmpty) {
-      _controller.add(
-        SharedContent(value: initialText, type: SharedContentType.text),
-      );
-    }
     final initialMedia = await ReceiveSharingIntent.instance.getInitialMedia();
     for (final file in initialMedia) {
-      if (file.type == SharedMediaType.image) {
+      _addMedia(file);
+    }
+  }
+
+  void _addMedia(SharedMediaFile file) {
+    switch (file.type) {
+      case SharedMediaType.image:
         _controller.add(
           SharedContent(value: file.path, type: SharedContentType.image),
         );
-      }
+      case SharedMediaType.text:
+      case SharedMediaType.url:
+        final text = file.path.trim().isNotEmpty ? file.path : file.message;
+        if (text != null && text.trim().isNotEmpty) {
+          _controller.add(
+            SharedContent(value: text, type: SharedContentType.text),
+          );
+        }
+      case SharedMediaType.video:
+      case SharedMediaType.file:
+        break;
     }
   }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'screens/alerts_screen.dart';
 import 'screens/family_screen.dart';
-import 'screens/home_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/privacy_screen.dart';
 import 'screens/questions_screen.dart';

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../models/scan_result.dart';
 import '../services/scam_detector.dart';
 import '../services/share_service.dart';
 import '../services/text_extractor.dart';

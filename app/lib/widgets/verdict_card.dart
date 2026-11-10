@@ -16,7 +16,7 @@ class VerdictCard extends StatelessWidget {
     };
 
     return Card(
-      color: color.withValues(alpha: 0.08),
+      color: color.withOpacity(0.08),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Row(
